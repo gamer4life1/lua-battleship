@@ -104,9 +104,9 @@ dir = ""
 
 
 
-  local i = 1
-  local j = 1
-  for i=1,TABLE_LH do
+local i = 1
+local j = 1
+for i=1,TABLE_LH do
     pBoard[i] = {}
     cBoard[i] = {}
     hitlist[i] = {}
@@ -115,20 +115,20 @@ dir = ""
       cBoard[i][j] = " ~ "
       hitlist[i][j] = " ~ "
     end
-  end
+end
 
-  print("Battleship!")
-  print("Choosing who goes first...")
-  first = math.floor(math.random(1,6))
-  --print(first)
-  wait(5)
-  if first <= 3 then
+print("Battleship!")
+print("Choosing who goes first...")
+first = math.floor(math.random(1,6))
+--print(first)
+wait(5)
+if first <= 3 then
     pFirst = true
     print("You go first!")
-  else
+else
     pFirst = false
     print("Computer goes first!")
-  end
+end
   
 
 
