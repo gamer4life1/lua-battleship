@@ -129,7 +129,6 @@ else
     pFirst = false
     print("Computer goes first!")
 end
-  
 
 
 
@@ -153,25 +152,25 @@ for x=1,5 do
   if string.lower(dir) == "left" then
       --print("Left")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames)
+        --verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames)
         pBoard[yCoord][xCoord - y] = " * "
       end
     elseif string.lower(dir) == "right" then
       --print("Right")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        --verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
         pBoard[yCoord][xCoord + y] = " * "
       end
     elseif string.lower(dir) == "up" then
       --print("Up")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        --verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
         pBoard[yCoord - y][xCoord] = " * "
       end
     elseif string.lower(dir) == "down" then
       --print("Down")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        --verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
         pBoard[yCoord + y][xCoord] = " * "
       end
     
@@ -194,13 +193,11 @@ function mainLoop()
   printline = ""
   print("\nYour board:\nKey:\n-: nothing\n~: destroyed\n*: boat\n")
   for i=1, 10 do
-    
     for j=1, 10 do
       printline = printline .. pBoard[i][j]
     end
     print(printline)
     printline = ""
-    
   end
 end
 
