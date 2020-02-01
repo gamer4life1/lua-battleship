@@ -24,7 +24,9 @@ end
 
 
 function inTable(tbl, item)
+    print("Entering inTable func")
     for key, value in pairs(tbl) do
+        print(value)
         if value == item then return key end
     end
     return false
@@ -70,6 +72,7 @@ function verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames)
       end
     end
   elseif dir == "down" then
+    print("test")
     while pBoard[yCoord + y][xCoord] ~= " ~ " do
       while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
         xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
@@ -152,28 +155,86 @@ for x=1,5 do
   if string.lower(dir) == "left" then
       --print("Left")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames)
+        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
+            print("Invalid input!")
+            xCoord = 0
+            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
+                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
+                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
+                dir = input("Should the boat go up, down, left or right?")
+                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
+                    print("Invalid input. Please try again...\n")
+                end
+            end
+        end
         pBoard[yCoord][xCoord - y] = " * "
+        xCoord = 0
+        yCoord = 0
+        dir = ""
+
       end
     elseif string.lower(dir) == "right" then
       --print("Right")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
+            print("Invalid input!")
+            xCoord = 0
+            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
+                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
+                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
+                dir = input("Should the boat go up, down, left or right?")
+                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
+                    print("Invalid input. Please try again...\n")
+                end
+            end
+        end
         pBoard[yCoord][xCoord + y] = " * "
+        xCoord = 0
+        yCoord = 0
+        dir = ""
       end
     elseif string.lower(dir) == "up" then
-      --print("Up")
+      print("Up")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
+            print("Invalid input!")
+            xCoord = 0
+            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
+                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
+                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
+                dir = input("Should the boat go up, down, left or right?")
+                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
+                    print("Invalid input. Please try again...\n")
+                end
+            end
+        end
         pBoard[yCoord - y][xCoord] = " * "
+        xCoord = 0
+        yCoord = 0
+        dir = ""
       end
     elseif string.lower(dir) == "down" then
-      --print("Down")
+      print("Down")
       for y=1, boatLengths[x] do
-        verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, boatNames)
+        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
+            print("Invalid input!")
+            xCoord = 0
+            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
+                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
+                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
+                dir = input("Should the boat go up, down, left or right?")
+                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
+                    print("Invalid input. Please try again...\n")
+                end
+            end
+        end
+        print("Line 222 reached")
         pBoard[yCoord + y][xCoord] = " * "
+        xCoord = 0
+        yCoord = 0
+        dir = ""
       end
-    
+    end
     for i=1, 10 do
       for j=1, 10 do
         printline = printline .. pBoard[i][j]
@@ -186,7 +247,7 @@ for x=1,5 do
     yCoord = 0
     dir = ""
   end
-end
+
 
 
 function mainLoop()
