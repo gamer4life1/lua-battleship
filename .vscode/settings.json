@@ -1,8 +1,5 @@
 {
     "Lua.diagnostics.disable": [
-        "lowercase-global",
-        "lowercase-global",
-        "lowercase-global",
-        "lowercase-global"
+        "*.*"
     ]
 }
