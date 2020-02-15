@@ -1,5 +1,5 @@
 --require("strict")
-function input(message)
+function Input(message)
   print(message)
   return io.read()
 end
@@ -12,7 +12,7 @@ end
 --  return io.read()
 --end
 
-function ninput(message)
+function Ninput(message)
   print(message)
   local var
   var = io.read("*n")
@@ -23,7 +23,7 @@ end
 
 
 
-function inTable(tbl, item)
+function InTable(tbl, item)
     print("Entering inTable func")
     for key, value in pairs(tbl) do
         print(value)
@@ -32,104 +32,87 @@ function inTable(tbl, item)
     return false
 end
 
-function wait(seconds)
+function Wait(seconds)
   local start = os.time()
   repeat until os.time() > start + seconds
 end
 
-function verifyCoords(dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames)
-  if dir == "left" then
-    while pBoard[yCoord][xCoord - y] ~= " ~ " do
-      while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-        xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-        yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-        dir = input("Should the boat go up, down, left or right?")
-        if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-          print("Invalid input. Please try again...\n")
+function InitGrid()
+    local empty = {}
+    for i=1,10 do
+        empty[i] = {}
+        for j=1,10 do
+            empty[i][j] = " - "
         end
-      end
     end
-  elseif dir == "right" then
-    while pBoard[yCoord][xCoord + y] ~= " ~ " do
-      while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-        xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-        yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-        dir = input("Should the boat go up, down, left or right?")
-        if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-          print("Invalid input. Please try again...\n")
-        end
-      end
-    end
-  elseif dir == "up" then
-    while pBoard[yCoord - y][xCoord] ~= " ~ " do
-      while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-        xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-        yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-        dir = input("Should the boat go up, down, left or right?")
-        if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-          print("Invalid input. Please try again...\n")
-        end
-      end
-    end
-  elseif dir == "down" then
-    print("test")
-    while pBoard[yCoord + y][xCoord] ~= " ~ " do
-      while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-        xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-        yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-        dir = input("Should the boat go up, down, left or right?")
-        if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-          print("Invalid input. Please try again...\n")
-        end
-      end
-    end
-  end
+    return empty
 end
+
+function ShowGrid(grid)
+    print("   1  2  3  4  5  6  7  8  9  10")
+    for i=1,10 do
+        io.write(i)
+        -- Check if still need to print more nums
+        if (i < 10) then io.write("  ") end
+        for j=1,10 do io.write(grid[i][j]) end
+    end
+end
+
+function AskForShips(grid)
+
+    -- Carrier
+    print("Let's start with the carrier. It occupies 5 spaces.")
+    print("Please select a row between 1 and 10.")
+    Row = io.read()
+    print("Please select a column between 1 and 10.")
+    Column = io.read()
+    print("Please select a direction.")
+    Direction = io.read()
+
+    while InputAndPosCheck(Row, Column, Direction, 5, grid) == false do
+        print("Invalid input!")
+        print("Please select a row between 1 and 10.")
+        Row = io.read()
+        print("Please select a column between 1 and 10.")
+        Column = io.read()
+        print("Please select a direction.")
+        Direction = io.read()
+    end
+    PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 5, grid)
+    ShowGrid(grid)
+
+end
+
+function InputAndPosCheck(row, column, direction, length, grid)
+    
+end
+
 
 
 -- Set initial vars
 math.randomseed(os.time())
-printline = ""
 TABLE_LH = 10
-pBoard = {}
-cBoard = {}
-first = 0
-pFirst = false
-boatNames = {"carrier", "battleship", "destroyer", "sub", "patrol"}
-dirs = {"left", "right", "up", "down"}
-boatLengths = {5, 4, 3, 3, 2}
+-- BoatNames = {"carrier", "battleship", "destroyer", "sub", "patrol"}
+Dirs = {"left", "right", "up", "down"}
 --pBoatLengths = {}
 --cBoatLengths = {}
-hitlist = {}
-xCoord = 0
-yCoord = 0
-dir = ""
+PGrid = InitGrid()
+CGrid = InitGrid()
+Hitlist = InitGrid()
 
 
 
-local i = 1
-local j = 1
-for i=1,TABLE_LH do
-    pBoard[i] = {}
-    cBoard[i] = {}
-    hitlist[i] = {}
-    for j=1,TABLE_LH do
-      pBoard[i][j] = " ~ "
-      cBoard[i][j] = " ~ "
-      hitlist[i][j] = " ~ "
-    end
-end
 
 print("Battleship!")
 print("Choosing who goes first...")
-first = math.floor(math.random(1,6))
+First = math.floor(math.random(1,6))
 --print(first)
-wait(5)
-if first <= 3 then
-    pFirst = true
+Wait(5)
+if First <= 3 then
+    PFirst = true
     print("You go first!")
 else
-    pFirst = false
+    PFirst = false
     print("Computer goes first!")
 end
 
@@ -139,129 +122,19 @@ end
 
 print("Choose your boat locations.")
 print("___________________________\n")
-for x=1,5 do
-  while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-    xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-    yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-    dir = input("Should the boat go up, down, left or right?")
-    if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-      print("Invalid input. Please try again...\n")
-    end
-  end
-  printline = ""
-  print("Your board:\nKey:\n~: nothing\n-: destroyed\n*: boat\n")
-  
-  pBoard[xCoord][yCoord] = " * "
-  if string.lower(dir) == "left" then
-      --print("Left")
-      for y=1, boatLengths[x] do
-        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
-            print("Invalid input!")
-            xCoord = 0
-            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-                dir = input("Should the boat go up, down, left or right?")
-                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-                    print("Invalid input. Please try again...\n")
-                end
-            end
-        end
-        pBoard[yCoord][xCoord - y] = " * "
-        xCoord = 0
-        yCoord = 0
-        dir = ""
 
-      end
-    elseif string.lower(dir) == "right" then
-      --print("Right")
-      for y=1, boatLengths[x] do
-        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
-            print("Invalid input!")
-            xCoord = 0
-            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-                dir = input("Should the boat go up, down, left or right?")
-                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-                    print("Invalid input. Please try again...\n")
-                end
-            end
-        end
-        pBoard[yCoord][xCoord + y] = " * "
-        xCoord = 0
-        yCoord = 0
-        dir = ""
-      end
-    elseif string.lower(dir) == "up" then
-      print("Up")
-      for y=1, boatLengths[x] do
-        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
-            print("Invalid input!")
-            xCoord = 0
-            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-                dir = input("Should the boat go up, down, left or right?")
-                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-                    print("Invalid input. Please try again...\n")
-                end
-            end
-        end
-        pBoard[yCoord - y][xCoord] = " * "
-        xCoord = 0
-        yCoord = 0
-        dir = ""
-      end
-    elseif string.lower(dir) == "down" then
-      print("Down")
-      for y=1, boatLengths[x] do
-        while not pcall(verifyCoords, dir, yCoord, xCoord, TABLE_LH, dirs, y, x, boatNames) do
-            print("Invalid input!")
-            xCoord = 0
-            while xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) do
-                xCoord = ninput("Enter the start x coordinate for the " .. boatNames[x] .. ":")
-                yCoord = ninput("Enter the start y coordinate for the " .. boatNames[x].. ":")
-                dir = input("Should the boat go up, down, left or right?")
-                if xCoord > TABLE_LH or xCoord < 1 or yCoord > TABLE_LH or yCoord < 1 or not inTable(dirs, dir) then
-                    print("Invalid input. Please try again...\n")
-                end
-            end
-        end
-        print("Line 222 reached")
-        pBoard[yCoord + y][xCoord] = " * "
-        xCoord = 0
-        yCoord = 0
-        dir = ""
-      end
-    end
-    for i=1, 10 do
-      for j=1, 10 do
-        printline = printline .. pBoard[i][j]
-      end
-      print(printline)
-      printline = ""
-    
-    end
-    xCoord = 0
-    yCoord = 0
-    dir = ""
-  end
-
-
-
-function mainLoop()
-  printline = ""
+function MainLoop()
+  Printline = ""
   print("\nYour board:\nKey:\n-: nothing\n~: destroyed\n*: boat\n")
   for i=1, 10 do
     for j=1, 10 do
-      printline = printline .. pBoard[i][j]
+      Printline = Printline .. PGrid[i][j]
     end
-    print(printline)
-    printline = ""
+    print(Printline)
+    Printline = ""
   end
 end
 
 
-mainLoop()
+MainLoop()
 
