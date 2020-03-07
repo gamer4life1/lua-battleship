@@ -24,9 +24,9 @@ end
 
 
 function InTable(tbl, item)
-    print("Entering inTable func")
+    --print("Entering inTable func")
     for key, value in pairs(tbl) do
-        print(value)
+    --     print(value)
         if value == item then return key end
     end
     return false
@@ -53,8 +53,9 @@ function ShowGrid(grid)
     for i=1,10 do
         io.write(i)
         -- Check if still need to print more nums
-        if (i < 10) then io.write("  ") end
+        if (i < 10) then io.write(" ") end
         for j=1,10 do io.write(grid[i][j]) end
+        print("\n")
     end
 end
 
@@ -78,13 +79,44 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 5, grid)
+    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 5, grid)
     ShowGrid(grid)
 
 end
 
 function InputAndPosCheck(row, column, direction, length, grid)
-    
+    local Empty = true
+    local TempRow = tonumber(row)
+    local TempColumn = tonumber(column)
+
+    if (TempRow == nil or TempColumn == nil or not InTable(Dirs, direction)) then
+        Empty = false
+        return Empty
+    end
+
+    for _=1, length do
+        if TempRow > 10 or TempRow < 1 or TempColumn > 10 or TempColumn < 1 then
+            Empty = false
+            return Empty
+        end
+
+        if grid[TempRow][TempColumn] ~= " - " then
+            Empty = false
+            return Empty
+        end
+
+        if direction == "up" then
+            TempRow = TempRow - 1
+        elseif direction == false then
+            TempRow = TempRow + 1
+        elseif direction == "left" then
+            TempColumn = TempColumn - 1
+        elseif direction == "right" then
+            TempColumn = TempColumn + 1
+        end
+
+    end
+    return Empty
 end
 
 
@@ -124,15 +156,8 @@ print("Choose your boat locations.")
 print("___________________________\n")
 
 function MainLoop()
-  Printline = ""
-  print("\nYour board:\nKey:\n-: nothing\n~: destroyed\n*: boat\n")
-  for i=1, 10 do
-    for j=1, 10 do
-      Printline = Printline .. PGrid[i][j]
-    end
-    print(Printline)
-    Printline = ""
-  end
+  ShowGrid(PGrid)
+  AskForShips(PGrid)
 end
 
 
