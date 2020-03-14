@@ -82,6 +82,90 @@ function AskForShips(grid)
     --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 5, grid)
     ShowGrid(grid)
 
+    -- Battleship
+    print("Ok, next is the battleship. It occupies 4 spaces.")
+    print("Please select a row between 1 and 10.")
+    Row = io.read()
+    print("Please select a column between 1 and 10.")
+    Column = io.read()
+    print("Please select a direction.")
+    Direction = io.read()
+
+    while InputAndPosCheck(Row, Column, Direction, 4, grid) == false do
+        print("Invalid input!")
+        print("Please select a row between 1 and 10.")
+        Row = io.read()
+        print("Please select a column between 1 and 10.")
+        Column = io.read()
+        print("Please select a direction.")
+        Direction = io.read()
+    end
+    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 4, grid)
+    ShowGrid(grid)
+
+    -- Cruiser
+    print("Ok. Next is the cruiser. It occupies 3 spaces")
+    print("Please select a row between 1 and 10.")
+    Row = io.read()
+    print("Please select a column between 1 and 10.")
+    Column = io.read()
+    print("Please select a direction.")
+    Direction = io.read()
+
+    while InputAndPosCheck(Row, Column, Direction, 3, grid) == false do
+        print("Invalid input!")
+        print("Please select a row between 1 and 10.")
+        Row = io.read()
+        print("Please select a column between 1 and 10.")
+        Column = io.read()
+        print("Please select a direction.")
+        Direction = io.read()
+    end
+    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 3, grid)
+    ShowGrid(grid)
+
+    -- Submarine
+    print("All right, next is the submarine. It occupies 3 spaces.")
+    print("Please select a row between 1 and 10.")
+    Row = io.read()
+    print("Please select a column between 1 and 10.")
+    Column = io.read()
+    print("Please select a direction.")
+    Direction = io.read()
+
+    while InputAndPosCheck(Row, Column, Direction, 3, grid) == false do
+        print("Invalid input!")
+        print("Please select a row between 1 and 10.")
+        Row = io.read()
+        print("Please select a column between 1 and 10.")
+        Column = io.read()
+        print("Please select a direction.")
+        Direction = io.read()
+    end
+    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 3, grid)
+    ShowGrid(grid)
+
+    -- Destroyer
+    print("Finally, let's do the destroyer. It occupies 2 spaces.")
+    print("Please select a row between 1 and 10.")
+    Row = io.read()
+    print("Please select a column between 1 and 10.")
+    Column = io.read()
+    print("Please select a direction.")
+    Direction = io.read()
+
+    while InputAndPosCheck(Row, Column, Direction, 2, grid) == false do
+        print("Invalid input!")
+        print("Please select a row between 1 and 10.")
+        Row = io.read()
+        print("Please select a column between 1 and 10.")
+        Column = io.read()
+        print("Please select a direction.")
+        Direction = io.read()
+    end
+    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 2, grid)
+    ShowGrid(grid)
+
 end
 
 function InputAndPosCheck(row, column, direction, length, grid)
