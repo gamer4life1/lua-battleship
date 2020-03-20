@@ -223,6 +223,22 @@ function InputAndPosCheck(row, column, direction, length, grid)
 end
 
 
+function enemyShips(eG)
+    -- Carrier
+    repeat
+        local row = math.random(10)
+        local column = math.random(10)
+        local directionN = math.random(4)
+
+        if directionN == 1 then direction = "left"
+        elseif directionN == 2 then direction = "up"
+        elseif directionN == 3 then direction = "right"
+        elseif directionN == 4 then direction = "down"
+        end
+    until(InputAndPosCheck(row, column, direction, 5, eG) == true)
+    PlaceShip(row, column, direction, 5, eG, "D")
+end
+
 
 -- Set initial vars
 math.randomseed(os.time())
