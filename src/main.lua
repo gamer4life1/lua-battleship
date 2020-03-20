@@ -79,7 +79,7 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 5, grid)
+    PlaceShip(tonumber(Row), tonumber(Column), Direction, 5, grid, "A")
     ShowGrid(grid)
 
     -- Battleship
@@ -100,7 +100,7 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 4, grid)
+    PlaceShip(tonumber(Row), tonumber(Column), Direction, 4, grid, "B")
     ShowGrid(grid)
 
     -- Cruiser
@@ -121,7 +121,7 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 3, grid)
+    PlaceShip(tonumber(Row), tonumber(Column), Direction, 3, grid, "R")
     ShowGrid(grid)
 
     -- Submarine
@@ -142,7 +142,7 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 3, grid)
+    PlaceShip(tonumber(Row), tonumber(Column), Direction, 3, grid, "S")
     ShowGrid(grid)
 
     -- Destroyer
@@ -163,9 +163,24 @@ function AskForShips(grid)
         print("Please select a direction.")
         Direction = io.read()
     end
-    --PlaceShip(tonumber(Row), tonumber(Column), tonumber(Direction), 2, grid)
+    PlaceShip(tonumber(Row), tonumber(Column), Direction, 2, grid, "D")
     ShowGrid(grid)
 
+end
+
+function PlaceShip(row, column, direction, length, grid, symbol)
+    for i=1, length do
+        grid[row][column] = " " .. symbol .. " "
+        if direction == "up" then
+            row = row - 1
+        elseif direction == "down" then
+            row = row + 1
+        elseif direction == "left" then
+            column = column - 1
+        elseif direction == "right" then
+            column = column + 1
+        end
+    end
 end
 
 function InputAndPosCheck(row, column, direction, length, grid)
@@ -178,7 +193,7 @@ function InputAndPosCheck(row, column, direction, length, grid)
         return Empty
     end
 
-    for _=1, length do
+    for i=1, length do
         if TempRow > 10 or TempRow < 1 or TempColumn > 10 or TempColumn < 1 then
             Empty = false
             return Empty
@@ -191,12 +206,16 @@ function InputAndPosCheck(row, column, direction, length, grid)
 
         if direction == "up" then
             TempRow = TempRow - 1
-        elseif direction == false then
+        elseif direction == "down" then
+            --print("It\'s going down")
             TempRow = TempRow + 1
         elseif direction == "left" then
             TempColumn = TempColumn - 1
         elseif direction == "right" then
             TempColumn = TempColumn + 1
+        else
+            Empty = false
+            return Empty
         end
 
     end
