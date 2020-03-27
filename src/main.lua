@@ -164,7 +164,6 @@ function AskForShips(grid)
         Direction = io.read()
     end
     PlaceShip(tonumber(Row), tonumber(Column), Direction, 2, grid, "D")
-    ShowGrid(grid)
 
 end
 
@@ -373,12 +372,15 @@ end
 print("Choose your boat locations.")
 print("___________________________\n")
 
-function MainLoop()
-  ShowGrid(PGrid)
-  AskForShips(PGrid)
-  EnemyShips(CGrid)
+function Init()
+    AskForShips(PGrid)
+    EnemyShips(CGrid)
 end
 
+function MainLoop()
+  ShowGrid(PGrid)
+end
 
+Init()
 MainLoop()
 
