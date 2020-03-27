@@ -3,6 +3,8 @@
         "*.*"
     ],
     "Lua.diagnostics.globals": [
-        "printline"
+        "printline",
+        "row",
+        "column"
     ]
 }

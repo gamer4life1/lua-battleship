@@ -184,9 +184,9 @@ function PlaceShip(row, column, direction, length, grid, symbol)
 end
 
 function InputAndPosCheck(row, column, direction, length, grid)
-    local Empty = true
-    local TempRow = tonumber(row)
-    local TempColumn = tonumber(column)
+    Empty = true
+    TempRow = tonumber(row)
+    TempColumn = tonumber(column)
 
     if (TempRow == nil or TempColumn == nil or not InTable(Dirs, direction)) then
         Empty = false
@@ -223,20 +223,119 @@ function InputAndPosCheck(row, column, direction, length, grid)
 end
 
 
-function enemyShips(eG)
+function EnemyShips(eG)
+    Row = 0
+    Column = 0
+    Direction = ""
     -- Carrier
     repeat
-        local row = math.random(10)
-        local column = math.random(10)
-        local directionN = math.random(4)
+        Row = math.random(10)
+        Column = math.random(10)
+        DirectionN = math.random(4)
 
-        if directionN == 1 then direction = "left"
-        elseif directionN == 2 then direction = "up"
-        elseif directionN == 3 then direction = "right"
-        elseif directionN == 4 then direction = "down"
+        if DirectionN == 1 then
+            Direction = "left"
+            --print("Left")
+        elseif DirectionN == 2 then
+            Direction = "up"
+            --print("Up")
+        elseif DirectionN == 3 then
+            Direction = "right"
+            --print("Right")
+        elseif DirectionN == 4 then
+            Direction = "down"
+            --print("Down")
         end
-    until(InputAndPosCheck(row, column, direction, 5, eG) == true)
-    PlaceShip(row, column, direction, 5, eG, "D")
+    until(InputAndPosCheck(Row, Column, Direction, 5, eG) == true)
+    PlaceShip(Row, Column, Direction, 5, eG, "A")
+
+    -- Battleship
+    repeat
+        Row = math.random(10)
+        Column = math.random(10)
+        DirectionN = math.random(4)
+
+        if DirectionN == 1 then
+            Direction = "left"
+            --print("Left")
+        elseif DirectionN == 2 then
+            Direction = "up"
+            --print("Up")
+        elseif DirectionN == 3 then
+            Direction = "right"
+            --print("Right")
+        elseif DirectionN == 4 then
+            Direction = "down"
+            --print("Down")
+        end
+    until(InputAndPosCheck(Row, Column, Direction, 4, eG) == true)
+    PlaceShip(Row, Column, Direction, 4, eG, "B")
+
+    -- Cruiser
+    repeat
+        Row = math.random(10)
+        Column = math.random(10)
+        DirectionN = math.random(4)
+
+        if DirectionN == 1 then
+            Direction = "left"
+            --print("Left")
+        elseif DirectionN == 2 then
+            Direction = "up"
+            --print("Up")
+        elseif DirectionN == 3 then
+            Direction = "right"
+            --print("Right")
+        elseif DirectionN == 4 then
+            Direction = "down"
+            --print("Down")
+        end
+    until(InputAndPosCheck(Row, Column, Direction, 3, eG) == true)
+    PlaceShip(Row, Column, Direction, 3, eG, "R")
+
+    -- Submarine
+    repeat
+        Row = math.random(10)
+        Column = math.random(10)
+        DirectionN = math.random(4)
+
+        if DirectionN == 1 then
+            Direction = "left"
+            --print("Left")
+        elseif DirectionN == 2 then
+            Direction = "up"
+            --print("Up")
+        elseif DirectionN == 3 then
+            Direction = "right"
+            --print("Right")
+        elseif DirectionN == 4 then
+            Direction = "down"
+            --print("Down")
+        end
+    until(InputAndPosCheck(Row, Column, Direction, 3, eG) == true)
+    PlaceShip(Row, Column, Direction, 3, eG, "S")
+
+    -- Destroyer
+    repeat
+        Row = math.random(10)
+        Column = math.random(10)
+        DirectionN = math.random(4)
+
+        if DirectionN == 1 then
+            Direction = "left"
+            --print("Left")
+        elseif DirectionN == 2 then
+            Direction = "up"
+            --print("Up")
+        elseif DirectionN == 3 then
+            Direction = "right"
+            --print("Right")
+        elseif DirectionN == 4 then
+            Direction = "down"
+            --print("Down")
+        end
+    until(InputAndPosCheck(Row, Column, Direction, 2, eG) == true)
+    PlaceShip(Row, Column, Direction, 2, eG, "D")
 end
 
 
@@ -277,6 +376,7 @@ print("___________________________\n")
 function MainLoop()
   ShowGrid(PGrid)
   AskForShips(PGrid)
+  EnemyShips(CGrid)
 end
 
 
