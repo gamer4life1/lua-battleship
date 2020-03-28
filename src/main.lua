@@ -370,13 +370,16 @@ end
 function IsAlive(grid)
 
     x = 0
+    y = 0
 
-    for key, value in pairs(grid) do
-        if value == " X " then
-            x = x + 1
+    for x=1, 10 do
+        for y=1, 10 do
+            if grid[x][y] == " X " then
+                x = x + 1
+            end
         end
     end
-
+    print(x)
     if x >= 17 then
         return false
     end
