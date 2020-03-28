@@ -352,6 +352,7 @@ Hitlist = InitGrid()
 
 
 
+
 print("Battleship!")
 print("Choosing who goes first...")
 First = math.floor(math.random(1,6))
@@ -366,6 +367,55 @@ else
 end
 
 
+function IsAlive(grid)
+
+    x = 0
+
+    for key, value in pairs(grid) do
+        if value == " X " then
+            x = x + 1
+        end
+    end
+
+    if x >= 17 then
+        return false
+    end
+
+    return true
+
+end
+
+function PlayerTurn(CGrid, Hitlist)
+
+    repeat
+        print("What is the row to fire at?")
+        XCoord = tonumber(io.read())
+        print("What is the column to fire at?")
+        YCoord = tonumber(io.read())
+    until(XCoord ~= nil and YCoord ~= nil and 1 <= XCoord and XCoord <= 10 and 1 <= YCoord and YCoord <= 10 and CGrid[XCoord][YCoord] ~= " O " and CGrid[XCoord][YCoord] ~= " X ")
+
+    if CGrid[XCoord][YCoord] ~= " - " and CGrid[XCoord][YCoord] ~= " O " then
+        Hitlist[XCoord][YCoord] = " X "
+        CGrid[XCoord][YCoord] = " X "
+        print("You shot the computer\'s ship at " .. XCoord .. ", " .. YCoord .. "!")
+    else
+        Hitlist[XCoord][YCoord] = " O "
+        CGrid[XCoord][YCoord] = " O "
+    end
+end
+
+function EnemyTurn(PGrid)
+    repeat
+    XCoord = math.random(1, 10)
+    YCoord = math.random(1, 10)
+    until(PGrid[XCoord][YCoord] ~= " O " and PGrid[XCoord][YCoord] ~= " X ")
+    if PGrid[XCoord][YCoord] ~= " - " and PGrid[XCoord][YCoord] ~= " O " then
+        PGrid[XCoord][YCoord] = " X "
+        print("Your ship was shot at " .. XCoord .. ", " .. YCoord .. "!")
+    else
+        PGrid[XCoord][YCoord] = " O "
+    end
+end
 
 -- Choose boat locations
 
@@ -378,9 +428,27 @@ function Init()
 end
 
 function MainLoop()
-  ShowGrid(PGrid)
+    print("\nThis is your grid...")
+    ShowGrid(PGrid)
+    Wait(5)
+    print("Here is the hitlist:")
+    ShowGrid(Hitlist)
+    PlayerTurn(CGrid, Hitlist)
+    if IsAlive(CGrid) then
+        EnemyTurn(PGrid)
+    end
 end
 
-Init()
-MainLoop()
 
+Init()
+
+
+while IsAlive(PGrid) and IsAlive(CGrid) do
+    MainLoop()
+end
+
+if IsAlive(PGrid) then
+    print("You won! Congratulations...")
+else
+    print("You lost... Better luck next time!")
+end
