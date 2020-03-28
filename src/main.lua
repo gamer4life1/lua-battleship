@@ -427,15 +427,29 @@ function Init()
     EnemyShips(CGrid)
 end
 
-function MainLoop()
-    print("\nThis is your grid...")
-    ShowGrid(PGrid)
-    Wait(5)
-    print("Here is the hitlist:")
-    ShowGrid(Hitlist)
-    PlayerTurn(CGrid, Hitlist)
-    if IsAlive(CGrid) then
+
+function MainLoop(PFirst)
+    if PFirst then
+        print("\nThis is your grid...")
+        ShowGrid(PGrid)
+        Wait(5)
+        print("Here is the hitlist:")
+        ShowGrid(Hitlist)
+        PlayerTurn(CGrid, Hitlist)
+        if IsAlive(CGrid) then
+            EnemyTurn(PGrid)
+        end
+    else
         EnemyTurn(PGrid)
+
+        if IsAlive(PGrid) then
+            print("\nThis is your grid...")
+            ShowGrid(PGrid)
+            Wait(5)
+            print("Here is the hitlist:")
+            ShowGrid(Hitlist)
+            PlayerTurn(CGrid, Hitlist)
+        end
     end
 end
 
@@ -443,8 +457,9 @@ end
 Init()
 
 
+
 while IsAlive(PGrid) and IsAlive(CGrid) do
-    MainLoop()
+    MainLoop(PFirst)
 end
 
 if IsAlive(PGrid) then
